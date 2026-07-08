@@ -64,10 +64,16 @@
   /* ---------- hero ---------- */
   .hero{min-height:100svh;position:relative;display:flex;flex-direction:column;justify-content:flex-end;
     padding:clamp(1.4rem,5vw,3.5rem);padding-bottom:clamp(2.5rem,8vh,5rem);overflow:hidden}
-  .hero-bg{position:absolute;inset:0;z-index:-2}
-  .hero-bg::before{content:"";position:absolute;inset:0;z-index:1;
-    background:linear-gradient(180deg,rgba(11,10,15,.55) 0%,rgba(11,10,15,.15) 35%,rgba(11,10,15,.75) 78%,var(--ink) 100%)}
-  .hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:drift 24s var(--ease) infinite alternate}
+  .hero-bg{position:absolute;inset:0;z-index:-2;overflow:hidden;background:var(--ink)}
+  .hero-bg::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(180deg,rgba(11,10,15,.55) 0%,rgba(11,10,15,.2) 35%,rgba(11,10,15,.78) 80%,var(--ink) 100%)}
+  /* warm cinematic wash to unify the footage with the brand */
+  .hero-bg::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:soft-light;
+    background:radial-gradient(110% 90% at 28% 30%,rgba(200,145,26,.28),transparent 55%),
+               radial-gradient(90% 80% at 82% 72%,rgba(184,101,122,.22),transparent 55%)}
+  .hero-video,.hero-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero-video{transform:scale(1.02)}
+  .hero-fallback{z-index:-1}
   @keyframes drift{to{transform:scale(1.16) translate(-2%,-1.5%)}}
   .hero-inner{position:relative;z-index:2;max-width:900px}
   .hero h1{font-size:clamp(3.2rem,13vw,8.5rem);font-weight:300;letter-spacing:-.02em}
@@ -236,7 +242,11 @@
 <!-- HERO -->
 <header class="hero">
   <div class="hero-bg">
-    <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1600&q=80" alt="Candlelit celebration table">
+    <video class="hero-video" autoplay muted loop playsinline poster="hero-poster.jpg">
+      <source src="hero.webm" type="video/webm">
+      <source src="hero.mp4" type="video/mp4">
+    </video>
+    <img class="hero-fallback" src="hero-poster.jpg" alt="Lively celebration">
   </div>
   <div class="hero-inner">
     <p class="eyebrow reveal">Events · Weddings · Nights out — Cyprus</p>
