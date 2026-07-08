@@ -64,16 +64,10 @@
   /* ---------- hero ---------- */
   .hero{min-height:100svh;position:relative;display:flex;flex-direction:column;justify-content:flex-end;
     padding:clamp(1.4rem,5vw,3.5rem);padding-bottom:clamp(2.5rem,8vh,5rem);overflow:hidden}
-  .hero-bg{position:absolute;inset:0;z-index:-2;overflow:hidden;background:var(--ink)}
-  .hero-bg::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-    background:linear-gradient(180deg,rgba(11,10,15,.55) 0%,rgba(11,10,15,.2) 35%,rgba(11,10,15,.78) 80%,var(--ink) 100%)}
-  /* warm cinematic wash to unify the footage with the brand */
-  .hero-bg::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:soft-light;
-    background:radial-gradient(110% 90% at 28% 30%,rgba(200,145,26,.28),transparent 55%),
-               radial-gradient(90% 80% at 82% 72%,rgba(184,101,122,.22),transparent 55%)}
-  .hero-video,.hero-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-  .hero-video{transform:scale(1.02)}
-  .hero-fallback{z-index:-1}
+  .hero-bg{position:absolute;inset:0;z-index:-2}
+  .hero-bg::before{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,rgba(11,10,15,.55) 0%,rgba(11,10,15,.15) 35%,rgba(11,10,15,.75) 78%,var(--ink) 100%)}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:drift 24s var(--ease) infinite alternate}
   @keyframes drift{to{transform:scale(1.16) translate(-2%,-1.5%)}}
   .hero-inner{position:relative;z-index:2;max-width:900px}
   .hero h1{font-size:clamp(3.2rem,13vw,8.5rem);font-weight:300;letter-spacing:-.02em}
@@ -94,6 +88,10 @@
   /* reveal */
   .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
   .reveal.in{opacity:1;transform:none}
+
+  /* fade-up: staggered entrance for What we create, stats, testimonial */
+  .fade-up{opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  .fade-up.in{opacity:1;transform:none}
 
   section{padding:clamp(4rem,11vw,8rem) clamp(1.4rem,5vw,3.5rem);position:relative}
   .wrap{max-width:1180px;margin:0 auto}
@@ -224,7 +222,7 @@
   .install button{background:var(--gold);color:var(--ink);border:none;border-radius:100px;padding:.55rem 1.1rem;font-weight:600;cursor:pointer;font-family:'Manrope';font-size:.82rem}
   .install .dismiss{background:none;color:var(--bone-dim);padding:.55rem;font-size:1.1rem}
 
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.fade-up{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -238,11 +236,7 @@
 <!-- HERO -->
 <header class="hero">
   <div class="hero-bg">
-    <video class="hero-video" autoplay muted loop playsinline poster="hero-poster.jpg">
-      <source src="hero.webm" type="video/webm">
-      <source src="hero.mp4" type="video/mp4">
-    </video>
-    <img class="hero-fallback" src="hero-poster.jpg" alt="Lively celebration">
+    <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1600&q=80" alt="Candlelit celebration table">
   </div>
   <div class="hero-inner">
     <p class="eyebrow reveal">Events · Weddings · Nights out — Cyprus</p>
@@ -259,28 +253,28 @@
 <!-- OCCASIONS -->
 <section id="occasions">
   <div class="wrap">
-    <div class="sec-head reveal">
+    <div class="sec-head fade-up">
       <p class="eyebrow">What we create</p>
       <h2>One team for every kind of <em>gathering</em>.</h2>
       <p>From a hundred-guest wedding to an intimate rooftop dinner — venues, food, styling and staff, handled end to end.</p>
     </div>
     <div class="occasions">
-      <article class="occ reveal">
+      <article class="occ fade-up" style="transition-delay:.08s">
         <span class="occ-tag">Weddings</span>
         <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80" alt="Wedding reception">
         <h3>Weddings</h3><p class="occ-sub">Full-day styling & catering</p>
       </article>
-      <article class="occ reveal" style="transition-delay:.08s">
+      <article class="occ fade-up" style="transition-delay:.16s">
         <span class="occ-tag">Private</span>
         <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=900&q=80" alt="Private party">
         <h3>Private parties</h3><p class="occ-sub">Birthdays, anniversaries, home</p>
       </article>
-      <article class="occ reveal" style="transition-delay:.16s">
+      <article class="occ fade-up" style="transition-delay:.24s">
         <span class="occ-tag">Nightlife</span>
         <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80" alt="Club night">
         <h3>Club nights</h3><p class="occ-sub">Venue takeovers & bottle service</p>
       </article>
-      <article class="occ reveal" style="transition-delay:.24s">
+      <article class="occ fade-up" style="transition-delay:.32s">
         <span class="occ-tag">Corporate</span>
         <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=900&q=80" alt="Corporate event">
         <h3>Corporate</h3><p class="occ-sub">Launches, galas, team dinners</p>
@@ -367,12 +361,12 @@
 <section>
   <div class="wrap">
     <div class="proof">
-      <div class="stat reveal"><div class="n">420+</div><div class="l">Events staged</div></div>
-      <div class="stat reveal" style="transition-delay:.1s"><div class="n">15</div><div class="l">Years on the island</div></div>
-      <div class="stat reveal" style="transition-delay:.2s"><div class="n">60+</div><div class="l">Partner venues</div></div>
-      <div class="stat reveal" style="transition-delay:.3s"><div class="n">4.9★</div><div class="l">Average rating</div></div>
+      <div class="stat fade-up"><div class="n">420+</div><div class="l">Events staged</div></div>
+      <div class="stat fade-up" style="transition-delay:.08s"><div class="n">15</div><div class="l">Years on the island</div></div>
+      <div class="stat fade-up" style="transition-delay:.16s"><div class="n">60+</div><div class="l">Partner venues</div></div>
+      <div class="stat fade-up" style="transition-delay:.24s"><div class="n">4.9★</div><div class="l">Average rating</div></div>
     </div>
-    <div class="quote-block reveal">
+    <div class="quote-block fade-up" style="transition-delay:.32s">
       <p>“They took an idea we couldn't even describe and turned it into the best night of our lives. We were guests at our own wedding — exactly as promised.”</p>
       <div class="who">Elena &amp; Andreas · Limassol</div>
     </div>
@@ -438,7 +432,7 @@
 <script>
   /* ---- reveal on scroll ---- */
   const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  document.querySelectorAll('.reveal, .fade-up').forEach(el=>io.observe(el));
 
   /* ---- nav solidify ---- */
   addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('solid',scrollY>40));
