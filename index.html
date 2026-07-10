@@ -114,6 +114,51 @@
   .occ .occ-sub{font-size:.85rem;color:var(--bone-dim);margin-top:.3rem}
   .occ .occ-tag{position:absolute;top:1.2rem;left:1.2rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
     background:var(--glass);backdrop-filter:blur(8px);padding:.4rem .8rem;border-radius:100px;border:1px solid var(--line);color:var(--gold)}
+  .occ-gallery-btn{position:relative;z-index:2;margin-top:1rem;align-self:flex-start;
+    background:rgba(245,240,232,.08);border:1px solid var(--line);color:var(--bone);
+    font-family:'Manrope';font-size:.8rem;letter-spacing:.03em;padding:.6rem 1.1rem;border-radius:100px;
+    cursor:pointer;transition:.35s var(--ease);-webkit-tap-highlight-color:transparent}
+  .occ-gallery-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:translateY(-2px)}
+  .occ-gallery-btn:active{transform:scale(.95)}
+
+  /* ---------- gallery overlay ---------- */
+  .gallery-overlay{position:fixed;inset:0;z-index:900;background:var(--ink);overflow-y:auto;
+    display:none;flex-direction:column;padding-bottom:3rem;
+    animation:galleryIn .45s var(--ease)}
+  .gallery-overlay.open{display:flex}
+  @keyframes galleryIn{from{opacity:0;transform:translateY(20px)}}
+  .gallery-head{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:calc(1.1rem + env(safe-area-inset-top)) clamp(1.2rem,5vw,2.5rem) 1.1rem;
+    background:linear-gradient(180deg,var(--ink) 60%,transparent);}
+  .gallery-back{background:rgba(245,240,232,.08);border:1px solid var(--line);color:var(--bone);
+    font-family:'Manrope';font-size:.85rem;padding:.6rem 1rem;border-radius:100px;cursor:pointer;
+    transition:.3s var(--ease);-webkit-tap-highlight-color:transparent;white-space:nowrap}
+  .gallery-back:hover{background:var(--bone);color:var(--ink)}
+  .gallery-back:active{transform:scale(.95)}
+  .gallery-title{text-align:center}
+  .gallery-title h2{font-size:clamp(1.6rem,6vw,2.4rem);font-weight:300}
+  .gallery-owner-note{margin:0 clamp(1.2rem,5vw,2.5rem) 1.6rem;padding:.9rem 1.2rem;
+    background:rgba(200,145,26,.08);border:1px solid rgba(200,145,26,.25);border-radius:14px;
+    font-size:.85rem;color:var(--bone-dim);text-align:center;line-height:1.6}
+  .gallery-owner-note span{color:var(--gold)}
+  .gallery-owner-note b{color:var(--bone);font-weight:500}
+  .gallery-owner-note em{color:var(--gold);font-style:normal;display:block;margin-top:.2rem;font-size:.78rem}
+  .gallery-grid{columns:2;column-gap:.7rem;padding:0 clamp(1.2rem,5vw,2.5rem)}
+  @media(min-width:700px){.gallery-grid{columns:3}}
+  @media(min-width:1000px){.gallery-grid{columns:4}}
+  .gallery-grid img{width:100%;margin-bottom:.7rem;border-radius:14px;display:block;cursor:pointer;
+    border:1px solid var(--line);transition:.4s var(--ease);break-inside:avoid}
+  .gallery-grid img:hover{transform:scale(1.02);border-color:var(--gold)}
+  .gallery-grid img:active{transform:scale(.98)}
+
+  /* ---------- lightbox ---------- */
+  .lightbox{position:fixed;inset:0;z-index:1100;background:rgba(5,4,8,.94);
+    display:none;align-items:center;justify-content:center;padding:2rem;animation:fade .3s}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:100%;max-height:90vh;border-radius:12px;box-shadow:var(--shadow)}
+  .lightbox-close{position:absolute;top:calc(1.2rem + env(safe-area-inset-top));right:1.2rem;
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--glass);
+    color:var(--bone);cursor:pointer;font-size:1.2rem;display:grid;place-items:center}
 
   /* ---------- builder ---------- */
   .builder{background:
@@ -313,21 +358,25 @@
         <span class="occ-tag">Weddings</span>
         <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80" alt="Wedding reception">
         <h3>Weddings</h3><p class="occ-sub">Full-day styling & catering</p>
+        <button class="occ-gallery-btn" onclick="openGallery('weddings')">View gallery →</button>
       </article>
       <article class="occ reveal" style="transition-delay:.08s">
         <span class="occ-tag">Private</span>
         <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=900&q=80" alt="Private party">
         <h3>Private parties</h3><p class="occ-sub">Birthdays, anniversaries, home</p>
+        <button class="occ-gallery-btn" onclick="openGallery('private')">View gallery →</button>
       </article>
       <article class="occ reveal" style="transition-delay:.16s">
         <span class="occ-tag">Nightlife</span>
         <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80" alt="Club night">
         <h3>Club nights</h3><p class="occ-sub">Venue takeovers & bottle service</p>
+        <button class="occ-gallery-btn" onclick="openGallery('club')">View gallery →</button>
       </article>
       <article class="occ reveal" style="transition-delay:.24s">
         <span class="occ-tag">Corporate</span>
         <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=900&q=80" alt="Corporate event">
         <h3>Corporate</h3><p class="occ-sub">Launches, galas, team dinners</p>
+        <button class="occ-gallery-btn" onclick="openGallery('corporate')">View gallery →</button>
       </article>
     </div>
   </div>
@@ -446,6 +495,28 @@
   </div>
 </footer>
 
+<!-- GALLERY OVERLAY -->
+<div class="gallery-overlay" id="galleryOverlay">
+  <div class="gallery-head">
+    <button class="gallery-back" onclick="closeGallery()" aria-label="Back">← Back</button>
+    <div class="gallery-title">
+      <p class="eyebrow" id="galleryEyebrow">Our work</p>
+      <h2 id="galleryHeading">Weddings</h2>
+    </div>
+    <div style="width:70px"></div>
+  </div>
+  <div class="gallery-owner-note">
+    <span>✦</span> This is where <b id="galleryOwnerName">the team</b> showcases real events. <em>Owner photo uploads coming soon.</em>
+  </div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" aria-label="Close">✕</button>
+  <img id="lightboxImg" src="" alt="Event photo">
+</div>
+
 <!-- NATIVE TAB BAR (appears when installed as an app) -->
 <nav class="tabbar" id="tabbar" aria-label="App navigation">
   <button class="active" data-target="top" onclick="goTab(this,'top')" aria-label="Home">
@@ -500,6 +571,65 @@
 </div>
 
 <script>
+  /* ---- GALLERY ---- */
+  const GALLERY={
+    weddings:{title:'Weddings',photos:[
+      'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1522413452208-996ff3f3e740?auto=format&fit=crop&w=700&q=80']},
+    private:{title:'Private parties',photos:[
+      'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1496843916299-590492c751f4?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1508997449629-303059a039c0?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=700&q=80']},
+    club:{title:'Club nights',photos:[
+      'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1571266028243-e4733b0f3c3c?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1545128485-c400e7702796?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1516873240891-4bf014598ab4?auto=format&fit=crop&w=700&q=80']},
+    corporate:{title:'Corporate',photos:[
+      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=700&q=80',
+      'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=700&q=80']}
+  };
+  function openGallery(key){
+    const g=GALLERY[key]; if(!g)return;
+    document.getElementById('galleryHeading').textContent=g.title;
+    const grid=document.getElementById('galleryGrid');
+    grid.innerHTML=g.photos.map(src=>`<img src="${src}" loading="lazy" onclick="openLightbox('${src}')" alt="${g.title} event">`).join('');
+    document.getElementById('galleryOverlay').classList.add('open');
+    document.body.style.overflow='hidden';
+    document.getElementById('galleryOverlay').scrollTop=0;
+  }
+  function closeGallery(){
+    document.getElementById('galleryOverlay').classList.remove('open');
+    document.body.style.overflow='';
+  }
+  function openLightbox(src){
+    const full=src.replace('w=700','w=1400');
+    document.getElementById('lightboxImg').src=full;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+
   /* ---- native tab bar navigation ---- */
   function goTab(btn,target){
     document.querySelectorAll('.tabbar button').forEach(b=>b.classList.remove('active'));
