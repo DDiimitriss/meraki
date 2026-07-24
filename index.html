@@ -558,6 +558,7 @@
         <h3>Request sent</h3>
         <p class="sub" style="margin-bottom:0">Meraki has your event details. Someone from the team will be in touch within 24 hours. Get excited.</p>
         <button class="btn" style="margin-top:1.6rem" onclick="closeQuote()">Done</button>
+        <a id="email-fallback" href="#" style="display:block;margin-top:1rem;font-size:.85rem;color:var(--gold);text-decoration:underline">Prefer email? Send it that way instead →</a>
       </div>
     </div>
   </div>
@@ -714,8 +715,28 @@
   }
   function closeQuote(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
   function submitQuote(){
-    /* In a real deployment this posts to the owner's inbox / WhatsApp.
-       For the demo it confirms instantly. */
+    const name=document.getElementById('f-name').value.trim();
+    const contact=document.getElementById('f-contact').value.trim();
+    const date=document.getElementById('f-date').value.trim();
+    const notes=document.getElementById('f-notes').value.trim();
+    const catering=state.tier*state.guests;
+    const addonSum=state.addons.reduce((s,a)=>s+a.val,0);
+    const message=[
+      'New Meraki enquiry',
+      `Occasion: ${state.occasion} · ${state.tierName}`,
+      `Guests: ${state.guests}`,
+      state.addons.length?`Extras: ${state.addons.map(a=>a.label).join(', ')}`:null,
+      `Estimate: ${eur(catering+addonSum)} (indicative)`,
+      '',
+      `Name: ${name||'—'}`,
+      `Contact: ${contact||'—'}`,
+      date?`Preferred date: ${date}`:null,
+      notes?`Notes: ${notes}`:null
+    ].filter(Boolean).join('\n');
+    const waLink=`https://wa.me/35796008587?text=${encodeURIComponent(message)}`;
+    const mailLink=`mailto:dgubs@hotmail.com?subject=${encodeURIComponent('New Meraki enquiry — '+state.occasion)}&body=${encodeURIComponent(message)}`;
+    document.getElementById('email-fallback').href=mailLink;
+    window.open(waLink,'_blank');
     document.getElementById('form-view').style.display='none';
     document.getElementById('success-view').style.display='block';
   }
